@@ -1,0 +1,19 @@
+{
+    "name": "wangruyi/php-crond",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Wangruyi\\PhpCrond\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wangruyi",
+            "email": "327401898@qq.com"
+        }
+    ],
+    "require": {
+        "symfony/process": "^5.4",
+        "monolog/monolog": "^2.9"
+    }
+}
