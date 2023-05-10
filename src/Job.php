@@ -26,7 +26,7 @@ class Job
     public function getCommand()
     {
         if (strpos('>>', $this->command) === false && $this->output){
-            return $this->command . ' >> ' . $this->output . ' 2>&1';
+            return $this->command . ' >> ' . $this->output . ' 2>&1 &';
         }
 
         return $this->command;
