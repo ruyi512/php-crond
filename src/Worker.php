@@ -2,16 +2,33 @@
 namespace Wangruyi\PhpCrond;
 
 use Symfony\Component\Process\Process;
+use Wangruyi\PhpCrond\Parser\CommandLine;
 
 class Worker
 {
+    private $logger;
 
-    public function submit(Job $job)
+    public function __construct($logger)
     {
-        var_dump($job->getCommand());
-//        $descriptors = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
-//        $process = proc_open($job->getCommand(), $descriptors, $pipes, $job->getCwd());
-        $process = Process::fromShellCommandline($job->getCommand(), $job->getCwd());
+        $this->logger = $logger;
+    }
+
+    /**
+     * Start execution by fork a daemon process
+     *
+     * @param Job $job
+     */
+    public function run(Job $job)
+    {
+        $commandLine = CommandLine::build($job->getCommand(), $job->getOutput(), true);
+        $this->logger->info('Command ' . $commandLine);
+
+        $process = Process::fromShellCommandline($commandLine, $job->getCwd());
         $process->run();
+        if (!$process->isSuccessful()){
+            $this->logger->error($process->getErrorOutput());
+        }else{
+            $this->logger->info('Success ' . $commandLine);
+        }
     }
 }

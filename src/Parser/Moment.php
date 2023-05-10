@@ -1,5 +1,5 @@
 <?php
-namespace Wangruyi\PhpCrond;
+namespace Wangruyi\PhpCrond\Parser;
 
 
 class Moment
