@@ -6,6 +6,12 @@
             "Wangruyi\\PhpCrond\\": "src/"
         }
     },
+    "description": "php crontab base on symfony/process",
+    "license": "MIT",
+    "keywords": [
+        "crontab",
+        "php schedule"
+    ],
     "authors": [
         {
             "name": "wangruyi",
@@ -13,6 +19,7 @@
         }
     ],
     "require": {
+        "php": ">=7.2.5",
         "symfony/process": "^5.4",
         "monolog/monolog": "^2.9"
     }
