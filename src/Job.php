@@ -45,9 +45,9 @@ class Job
         return $this->cwd;
     }
 
-    public function getCommandLine()
+    public function getCommandLine($daemon=true)
     {
-        return CommandLine::build($this->getCommand(), $this->getOutput(), true);
+        return CommandLine::build($this->getCommand(), $this->getOutput(), $daemon);
     }
 
 }
