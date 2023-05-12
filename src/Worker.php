@@ -21,14 +21,15 @@ class Worker
     public function run(Job $job)
     {
         $commandLine = CommandLine::build($job->getCommand(), $job->getOutput(), true);
-        $this->logger->info('Command ' . $commandLine);
+        $outputPrefix = '[Job ' . $job->getName() . '] ';
+        $this->logger->info($outputPrefix . $commandLine);
 
         $process = Process::fromShellCommandline($commandLine, $job->getCwd());
         $process->run();
         if (!$process->isSuccessful()){
-            $this->logger->error($process->getErrorOutput());
+            $this->logger->error($outputPrefix . $process->getErrorOutput());
         }else{
-            $this->logger->info('Success ' . $commandLine);
+            $this->logger->info($outputPrefix . ' fork process success');
         }
     }
 }

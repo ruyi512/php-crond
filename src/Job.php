@@ -9,13 +9,13 @@ class Job
     protected $output;
     protected $cwd;
 
-    public function __construct($moment, $command, $name='', $cwd=null, $output='')
+    public function __construct($moment, $command, $name='', $output='', $cwd=null)
     {
         $this->moment = $moment;
         $this->command = $command;
         $this->name = $name;
         $this->output = $output;
-        $this->cwd = $cwd;
+        $this->cwd = $cwd ?: getcwd();
     }
 
     public function getMoment()

@@ -16,6 +16,11 @@ class Scheduler
         $this->name = $name ?: 'scheduler';
     }
 
+    public function addJobs()
+    {
+
+    }
+
     public function addJob(Job $job)
     {
         return array_push($this->jobs, $job);

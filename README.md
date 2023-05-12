@@ -9,13 +9,13 @@
 ```
 $sch = new \Wangruyi\PhpCrond\Scheduler();
 
-$job = new \Wangruyi\PhpCrond\Job('* * * * *', 'php echo.php -a=1001', 'echo', __DIR__, 'log/echo.log');
+$job = new \Wangruyi\PhpCrond\Job('* * * * *', 'php echo.php -a=1001', 'echo', 'log/echo.log');
 $sch->addJob($job);
 
-$job2 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php -v', 'phpv', __DIR__, 'log/echo.log');
+$job2 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php -v', 'phpv', 'log/echo.log');
 $sch->addJob($job2);
 
-$job3 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php echo.php -a=3001', 'echo', __DIR__, 'log/echo.log');
+$job3 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php echo.php -a=3001', 'echo', 'log/echo.log');
 $sch->addJob($job3);
 
 $sch->run();
