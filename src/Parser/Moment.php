@@ -7,6 +7,22 @@ class Moment
     const MOMENT_ALWAYS = '*';
     const MOMENT_MATCHER = ['matchMinute', 'matchHour', 'matchDayOfMonth', 'matchMonth', 'matchDayOfWeek'];
 
+    public static function validate($expression)
+    {
+        $moment = preg_split("/[\s]+/", $expression);
+        if (count($moment) != count(self::MOMENT_MATCHER)){
+            return false;
+        }
+
+        foreach ($moment as $item){
+            if (!preg_match('/^[\*\-\,\/\d]+$/', $item)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      *  Example of $expression definition:
      *  .---------------- minute (0 - 59)

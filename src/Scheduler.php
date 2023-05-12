@@ -16,13 +16,19 @@ class Scheduler
         $this->name = $name ?: 'scheduler';
     }
 
-    public function addJobs()
+    public function addJobs($jobs)
     {
-
+        foreach ($jobs as $job){
+            $this->addJob($job);
+        }
     }
 
     public function addJob(Job $job)
     {
+        if (!Moment::validate($job->getMoment())){
+            throw new \InvalidArgumentException('Invalid moment expression: ' . $job->getMoment());
+        }
+
         return array_push($this->jobs, $job);
     }
 

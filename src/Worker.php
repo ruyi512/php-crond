@@ -29,7 +29,7 @@ class Worker
         if (!$process->isSuccessful()){
             $this->logger->error($outputPrefix . $process->getErrorOutput());
         }else{
-            $this->logger->info($outputPrefix . ' fork process success');
+            $this->logger->info($outputPrefix . 'fork process success');
         }
     }
 }
