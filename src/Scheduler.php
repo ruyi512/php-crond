@@ -35,7 +35,7 @@ class Scheduler
     public function run()
     {
         $logger = new Logger($this->name);
-        $logHandler = new StreamHandler(STDOUT);
+        $logHandler = new StreamHandler(STDOUT, Logger::INFO);
         $logger->pushHandler($logHandler);
 
         while (true){
@@ -44,12 +44,19 @@ class Scheduler
             $executeTime = (new \DateTime())->setTimestamp($now + $waitSeconds);
             sleep($waitSeconds);
 
+            $logger->info('Schedule start');
             foreach ($this->jobs as $job){
                 if (!Moment::match($job->getMoment(), $executeTime)) continue;
 
-                $worker = new Worker($logger);
-                $worker->run($job);
+                $context = ['Job' => $job->getName()];
+                try{
+                    $logger->info($job->getCommandLine(), $context);
+                    Worker::run($job);
+                }catch (\Exception $e){
+                    $logger->error($e->getMessage(), $context);
+                }
             }
+            $logger->info('Schedule end');
         }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Wangruyi\PhpCrond;
 
+use Wangruyi\PhpCrond\Parser\CommandLine;
+
 class Job
 {
     protected $name;
@@ -41,6 +43,11 @@ class Job
     public function getCwd()
     {
         return $this->cwd;
+    }
+
+    public function getCommandLine()
+    {
+        return CommandLine::build($this->getCommand(), $this->getOutput(), true);
     }
 
 }
