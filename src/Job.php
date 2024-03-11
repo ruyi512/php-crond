@@ -37,7 +37,11 @@ class Job
 
     public function getOutput()
     {
-        return $this->output;
+        if (is_string($this->output)){
+            return $this->output;
+        }else{
+            return $this->output->getFilePath();
+        }
     }
 
     public function getCwd()

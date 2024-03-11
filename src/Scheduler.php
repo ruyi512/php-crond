@@ -8,6 +8,7 @@ use Wangruyi\PhpCrond\Parser\Moment;
 class Scheduler
 {
     const INTERVAL = 60;
+
     protected $jobs = [];
     private $name = '';
 
