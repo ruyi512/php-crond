@@ -43,7 +43,7 @@ class Job
             $path = $this->output->getFilePath();
         }
 
-        if (strpos($path, \DIRECTORY_SEPARATOR)){
+        if (strpos($path, \DIRECTORY_SEPARATOR, 1)){
             $this->mkdir(dirname($path));
         }
 
