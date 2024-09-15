@@ -38,10 +38,16 @@ class Job
     public function getOutput()
     {
         if (is_string($this->output)){
-            return $this->output;
+            $path = $this->output;
         }else{
-            return $this->output->getFilePath();
+            $path = $this->output->getFilePath();
         }
+
+        if (strpos($path, \DIRECTORY_SEPARATOR)){
+            $this->mkdir(dirname($path));
+        }
+
+        return $path;
     }
 
     public function getCwd()
@@ -52,6 +58,14 @@ class Job
     public function getCommandLine($daemon=true)
     {
         return CommandLine::build($this->getCommand(), $this->getOutput(), $daemon);
+    }
+
+    public function mkdir($path)
+    {
+        if (!is_dir($path)) {
+            $this->mkdir(dirname($path));
+            mkdir($path, 0777);
+        }
     }
 
 }
