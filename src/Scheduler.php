@@ -40,10 +40,11 @@ class Scheduler
         $logger->pushHandler($logHandler);
 
         while (true){
-            $now = time();
-            $waitSeconds = self::INTERVAL - $now % self::INTERVAL;
-            $executeTime = (new \DateTime())->setTimestamp($now + $waitSeconds);
-            sleep($waitSeconds);
+            $now = round(microtime(true) * 1000);
+            $interval = self::INTERVAL * 1000;
+            $waitMilliSeconds = $interval - $now % $interval;
+            $executeTime = (new \DateTime())->setTimestamp(($now + $waitMilliSeconds) / 1000);
+            usleep($waitMilliSeconds * 1000);
 
             $logger->info('Schedule start');
             foreach ($this->jobs as $job){
