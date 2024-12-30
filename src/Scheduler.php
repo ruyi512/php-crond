@@ -3,6 +3,7 @@ namespace Wangruyi\PhpCrond;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Wangruyi\PhpCrond\Parser\Moment;
 
 class Scheduler
@@ -10,6 +11,8 @@ class Scheduler
     const INTERVAL = 60;
 
     protected $jobs = [];
+    protected $logger = null;
+
     private $name = '';
 
     public function __construct($name='')
@@ -33,11 +36,26 @@ class Scheduler
         return array_push($this->jobs, $job);
     }
 
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    public function getLogger()
+    {
+        if (is_null($this->logger)) {
+            $logger = new Logger($this->name);
+            $logHandler = new StreamHandler(STDOUT, Logger::INFO);
+            $logger->pushHandler($logHandler);
+            $this->logger = $logger;
+        }
+
+        return $this->logger;
+    }
+
     public function run()
     {
-        $logger = new Logger($this->name);
-        $logHandler = new StreamHandler(STDOUT, Logger::INFO);
-        $logger->pushHandler($logHandler);
+        $logger = $this->getLogger();
 
         while (true){
             $now = round(microtime(true) * 1000);

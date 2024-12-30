@@ -21,6 +21,7 @@
     "require": {
         "php": ">=7.2.5",
         "symfony/process": "^5.4",
-        "monolog/monolog": "^2.9"
+        "monolog/monolog": "^2.9",
+        "psr/log": "^1.1"
     }
 }
