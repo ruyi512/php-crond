@@ -12,7 +12,7 @@ class CommandLine
     public static function build($command, $output=null, $daemon=true)
     {
         $line = $command;
-        if (strpos('>>', $line) === false && $output){
+        if (strpos($line, '>>') === false && $output){
             $line = $line . ' >> ' . $output . ' 2>&1';
         }
 
