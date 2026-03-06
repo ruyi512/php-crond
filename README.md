@@ -64,6 +64,14 @@ $job = new Job('* * * * *', 'php echo.php', 'task', 'log/echo_{Ymd}.log');
 
 如果不使用占位符，日志将始终写入同一个文件。
 
+### setOutput 方法
+
+`Job` 类还提供了 `setOutput` 方法，允许在运行时动态更改输出文件路径。该方法同样支持日期变量替换，用法与构造函数中的 `$output` 参数一致。例如：
+
+```php
+$job->setOutput('log/another_{Ymd}.log');
+```
+
 ### 调度器 Scheduler
 
 `Scheduler` 负责管理所有任务，并在无限循环中检查并执行到达时间的任务。
