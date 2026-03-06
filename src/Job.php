@@ -43,7 +43,7 @@ class Job
             $path = $this->output->getFilePath();
         }
 
-        if (strpos($path, \DIRECTORY_SEPARATOR, 1)){
+        if (strpos($path, \DIRECTORY_SEPARATOR) !== false){
             $this->mkdir(dirname($path));
         }
 
@@ -63,8 +63,8 @@ class Job
     public function mkdir($path)
     {
         if (!is_dir($path)) {
-            $this->mkdir(dirname($path));
-            mkdir($path, 0777);
+            // 使用递归参数一次性创建所有目录
+            mkdir($path, 0777, true);
         }
     }
 

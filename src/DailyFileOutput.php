@@ -36,10 +36,6 @@ class DailyFileOutput
 
     private function hasPathVariables($fileName)
     {
-        if (strpos($fileName, self::PATH_VARIABLE) === false) {
-            return false;
-        }
-
-        return true;
+        return strpos($fileName, self::PATH_VARIABLE) !== false;
     }
 }

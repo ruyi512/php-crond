@@ -61,6 +61,10 @@ class Scheduler
             $now = round(microtime(true) * 1000);
             $interval = self::INTERVAL * 1000;
             $waitMilliSeconds = $interval - $now % $interval;
+            // 如果正好在整分钟边界上，模为0，此时应该立即执行而不等待一个完整周期
+            if ($waitMilliSeconds == $interval) {
+                $waitMilliSeconds = 0;
+            }
             $executeTime = (new \DateTime())->setTimestamp(($now + $waitMilliSeconds) / 1000);
             usleep($waitMilliSeconds * 1000);
 
