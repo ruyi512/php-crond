@@ -3,3 +3,5 @@ composer.lock
 .idea
 *.log
 log
+# Aider
+.aider*

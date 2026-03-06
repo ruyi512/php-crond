@@ -8,7 +8,7 @@ use Wangruyi\PhpCrond\Parser\Moment;
 
 class Scheduler
 {
-    const INTERVAL = 60;
+    const INTERVAL_SECONDS = 60;
 
     protected $jobs = [];
     protected $logger = null;
@@ -56,19 +56,16 @@ class Scheduler
     public function run()
     {
         $logger = $this->getLogger();
+        $us = 1000000; // The unified unit of time is microseconds.
 
         while (true){
-            $now = round(microtime(true) * 1000);
-            $interval = self::INTERVAL * 1000;
-            $waitMilliSeconds = $interval - $now % $interval;
-            // 如果正好在整分钟边界上，模为0，此时应该立即执行而不等待一个完整周期
-            if ($waitMilliSeconds == $interval) {
-                $waitMilliSeconds = 0;
-            }
-            $executeTime = (new \DateTime())->setTimestamp(($now + $waitMilliSeconds) / 1000);
-            usleep($waitMilliSeconds * 1000);
+            $now = round(microtime(true) * $us);
+            $interval = self::INTERVAL_SECONDS * $us;
+            $delay = $interval - $now % $interval;
+            $executeTime = (new \DateTime())->setTimestamp(($now + $delay) / $us);
+            usleep($delay);
 
-            $logger->info('Schedule start');
+            $logger->info('Scheduler wake up');
             foreach ($this->jobs as $job){
                 if (!Moment::match($job->getMoment(), $executeTime)) continue;
 
@@ -80,7 +77,7 @@ class Scheduler
                     $logger->error($e->getMessage(), $context);
                 }
             }
-            $logger->info('Schedule end');
+            $logger->info('Scheduler end');
         }
     }
 }
