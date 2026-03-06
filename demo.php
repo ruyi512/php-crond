@@ -11,7 +11,7 @@ $sch = new \Wangruyi\PhpCrond\Scheduler();
 $job = new \Wangruyi\PhpCrond\Job('* * * * *', 'php echo.php -a=1001', 'echo', new \Wangruyi\PhpCrond\DailyFileOutput('log/echo.log'));
 $sch->addJob($job);
 
-$job2 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php -v', 'phpv', 'log/echo.log');
+$job2 = new \Wangruyi\PhpCrond\Job('*/1 * * * *', 'php -v', 'phpv', 'log/{Ymd}/echo.log');
 $sch->addJob($job2);
 
 $job3 = new \Wangruyi\PhpCrond\Job('*/2 * * * *', 'php echo.php -a=3001', 'echo', 'log/echo.log');

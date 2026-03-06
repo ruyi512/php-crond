@@ -52,9 +52,9 @@ public function __construct($moment, $command, $name='', $output='', $cwd=null)
 - **$output**：输出日志文件路径。如果留空，输出将被丢弃。支持日期变量，例如 `log/echo_{Ymd}.log`，详见下文。
 - **$cwd**：执行命令时的工作目录（可选，默认当前目录）。
 
-### 输出日志与DailyFileOutput
+### 输出日志与FileOutput
 
-框架内置了 `DailyFileOutput` 类，可以自动按日期分割日志文件。在`$output`参数中使用 `{Ymd}` 等占位符即可启用日期分割。例如：
+框架内置了 `FileOutput` 类，可以自动按日期分割日志文件。在`$output`参数中使用 `{Ymd}` 等占位符即可启用日期分割。例如：
 
 ```php
 $job = new Job('* * * * *', 'php echo.php', 'task', 'log/echo_{Ymd}.log');

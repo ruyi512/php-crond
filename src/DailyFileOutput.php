@@ -1,41 +1,26 @@
 <?php
 namespace Wangruyi\PhpCrond;
 
-class DailyFileOutput
+class DailyFileOutput extends FileOutput
 {
-    const PATH_VARIABLE = '{DATE}';
-
-    protected $fileName;
-    protected $dateFormat;
 
     public function __construct($fileName, $dateFormat='Ymd')
     {
-        $this->fileName = $fileName;
-        $this->dateFormat = $dateFormat;
+        parent::__construct($fileName, $dateFormat);
     }
 
     public function getFilePath()
     {
         $datetime = date($this->dateFormat);
+        $fileInfo = pathinfo($this->path);
+        $formatName = $fileInfo['dirname'];
+        $formatName .= \DIRECTORY_SEPARATOR . $fileInfo['filename'];
+        $formatName .= '-' . $datetime;
 
-        if ($this->hasPathVariables($this->fileName)){
-            $formatName = str_replace(self::PATH_VARIABLE, $datetime, $this->fileName);
-        }else {
-            $fileInfo = pathinfo($this->fileName);
-            $formatName = $fileInfo['dirname'];
-            $formatName .= \DIRECTORY_SEPARATOR . $fileInfo['filename'];
-            $formatName .= '-' . $datetime;
-
-            if (!empty($fileInfo['extension'])) {
-                $formatName .= '.' . $fileInfo['extension'];
-            }
+        if (!empty($fileInfo['extension'])) {
+            $formatName .= '.' . $fileInfo['extension'];
         }
 
         return $formatName;
-    }
-
-    private function hasPathVariables($fileName)
-    {
-        return strpos($fileName, self::PATH_VARIABLE) !== false;
     }
 }

@@ -16,7 +16,7 @@ class Job
         $this->moment = $moment;
         $this->command = $command;
         $this->name = $name;
-        $this->output = $output;
+        $this->setOutput($output);
         $this->cwd = $cwd ?: getcwd();
     }
 
@@ -35,16 +35,24 @@ class Job
         return $this->name;
     }
 
+    public function setOutput($output)
+    {
+        if (is_string($output)) {
+            $this->output = new FileOutput($output);
+        }else if ($output instanceof FileOutput){
+            $this->output = $output;
+        }else {
+            throw new \InvalidArgumentException('Invalid output type');
+        }
+    }
+
     public function getOutput()
     {
-        if (is_string($this->output)){
-            $path = $this->output;
-        }else{
-            $path = $this->output->getFilePath();
-        }
+        $path = $this->output->getFilePath();
 
-        if (strpos($path, \DIRECTORY_SEPARATOR) !== false){
-            $this->mkdir(dirname($path));
+        $dir = dirname($path);
+        if ($dir && !is_dir($dir)) {
+            mkdir($dir, 0777, true);
         }
 
         return $path;
@@ -58,14 +66,6 @@ class Job
     public function getCommandLine($daemon=true)
     {
         return CommandLine::build($this->getCommand(), $this->getOutput(), $daemon);
-    }
-
-    public function mkdir($path)
-    {
-        if (!is_dir($path)) {
-            // 使用递归参数一次性创建所有目录
-            mkdir($path, 0777, true);
-        }
     }
 
 }
