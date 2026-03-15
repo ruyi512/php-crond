@@ -5,3 +5,7 @@ composer.lock
 log
 # Aider
 .aider*
+.claude
+/build/
+.phpunit.result.cache
+phpunit.xml

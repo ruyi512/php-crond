@@ -6,6 +6,11 @@
             "Wangruyi\\PhpCrond\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Wangruyi\\PhpCrond\\Tests\\": "tests/"
+        }
+    },
     "description": "php crontab base on symfony/process",
     "license": "MIT",
     "keywords": [
@@ -15,7 +20,7 @@
     "authors": [
         {
             "name": "wangruyi",
-            "email": "327401898@qq.com"
+            "email": "wry512@qq.com"
         }
     ],
     "require": {
@@ -23,5 +28,11 @@
         "symfony/process": "^5.4",
         "monolog/monolog": "^2.9",
         "psr/log": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

@@ -9,6 +9,7 @@ class FileOutput
     public function __construct($fileName, $dateFormat='')
     {
         $this->path = $fileName;
+        $this->dateFormat = $dateFormat;
     }
 
     public function getFilePath()

@@ -20,6 +20,11 @@ class Scheduler
         $this->name = $name ?: 'scheduler';
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function addJobs($jobs)
     {
         foreach ($jobs as $job){
